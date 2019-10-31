@@ -7,13 +7,13 @@ from lxml import etree
 
 class File():
 
-    def open():
-        data_frame = pd.read_csv("movies.csv")
+    def open(self):
+        data_frame = pd.read_csv(self)
         #print(data_frame)
         return data_frame
 
-    def save2():
-        data_frame.to_csv("movies_updated.csv", index=False)
+    '''def save2():
+        data_frame.to_csv("movies_updated.csv", index=False)'''
 
     def save(self):
         self.to_csv("movies_updated.csv", index=False)
@@ -49,6 +49,7 @@ class Movie_update():
         self.frame_data_row[2]=self.movie_dict.get("Year")
         #print(self.frame_data_row)
         return self.frame_data_row
+
     def update_data_frame(self,data_frame,i):
         data_frame[i:i+1]=self.frame_data_row
         #print(data_frame)
@@ -75,7 +76,7 @@ class Add_Year():
 #data_frame.shape[0] - ilośc wierszy
 
 #-----------------------------------------------------------
-data_frame = File.open()
+data_frame = File.open("movies.csv")
 
 
 i=0
@@ -93,6 +94,6 @@ while i < data_frame.shape[0]:
     i+=1
 
 File.save(data_frame)
-File.save2()
+#File.save2()
 print(data_frame)
 print("END")
