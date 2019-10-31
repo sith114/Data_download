@@ -19,9 +19,7 @@ class File():
         self.to_csv("movies_updated.csv", index=False)
 
 class Movie_update():
-    movie_title=" "
-    movie_dict=""
-    frame_data_row=""
+
 
     def data_row(self,data_frame,i):
         frame_data_row=data_frame.values[i]
@@ -41,12 +39,24 @@ class Movie_update():
         web = "http://www.omdbapi.com/?t={}&apikey=55f1c482".format(self.movie_title)
         page = requests.get(web).text
         self.movie_dict = json.loads(page)
-        #print(self.movie_dict)
+        print(self.movie_dict)
         return self.movie_dict
 
     def add_year(self):
         #print(self.movie_dict.get("Year"))
         self.frame_data_row[2]=self.movie_dict.get("Year")
+        #print(self.frame_data_row)
+        return self.frame_data_row
+
+    def add_runtime(self):
+        #print(self.movie_dict.get("Runtime"))
+        self.frame_data_row[3]=self.movie_dict.get("Runtime")
+        #print(self.frame_data_row)
+        return self.frame_data_row
+
+    def add_genre(self):
+        #print(self.movie_dict.get("Runtime"))
+        self.frame_data_row[4]=self.movie_dict.get("Genre")
         #print(self.frame_data_row)
         return self.frame_data_row
 
@@ -84,10 +94,12 @@ movie_list_update = Movie_update()
 while i < data_frame.shape[0]:
 
     movie_list_update.data_row(data_frame,i)
-
     movie_list_update.title(data_frame,i)
+    #print(movie_list_update.movie_title)
     movie_list_update.dict_create()
     movie_list_update.add_year()
+    movie_list_update.add_runtime()
+    movie_list_update.add_genre()
     movie_list_update.update_data_frame(data_frame,i)
 
 
