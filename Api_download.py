@@ -30,8 +30,8 @@ class Movie_update():
         return self.frame_data_row
 
 
-    def title(self,data_frame, ite):
-        row = data_frame.values[ite]
+    def title(self,data_frame, i):
+        row = data_frame.values[i]
         #print(row)
         #print(row[1])
         self.movie_title=row[1]
@@ -50,7 +50,7 @@ class Movie_update():
         #print(self.frame_data_row)
         return self.frame_data_row
 
-    def update_data_frame(self,data_frame,i):
+    def update_data_frame(self,data_frame, i):
         data_frame[i:i+1]=self.frame_data_row
         #print(data_frame)
         return data_frame
@@ -77,7 +77,7 @@ class Add_Year():
 
 #-----------------------------------------------------------
 data_frame = File.open("movies.csv")
-
+print(data_frame)
 
 i=0
 movie_list_update = Movie_update()
@@ -94,6 +94,5 @@ while i < data_frame.shape[0]:
     i+=1
 
 File.save(data_frame)
-#File.save2()
 print(data_frame)
 print("END")
