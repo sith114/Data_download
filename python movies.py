@@ -1,9 +1,9 @@
+#import lxml.html
 import requests
 import json
 import pandas as pd
-
-
-
+import numpy as np
+#from lxml import etree
 
 class File():
 
@@ -16,7 +16,7 @@ class File():
         data_frame.to_csv("movies_updated.csv", index=False)'''
 
     def save(self):
-        self.to_csv("movies_updated.csv", index=False)
+        self.to_csv("movies_updated2.csv", index=False)
 
 class Movie_update():
 
@@ -25,13 +25,6 @@ class Movie_update():
         self.frame_data_row=frame_data_row
         #print(self.frame_data_row)
         return self.frame_data_row
-
-    def add_title(self,title):
-
-        data_frame.loc[data_frame.index.max()+1]=[data_frame.index.max()+1,title,"","","","","","","","","","","",""]
-        #self.frame_data_row[1] = title
-        print(data_frame)
-
 
     def title(self,data_frame, i):
         row = data_frame.values[i]
@@ -44,7 +37,7 @@ class Movie_update():
         web = "http://www.omdbapi.com/?t={}&apikey=55f1c482".format(self.movie_title)
         page = requests.get(web).text
         self.movie_dict = json.loads(page)
-        #print(self.movie_dict)
+        print(self.movie_dict)
         return self.movie_dict
 
     def add_year(self):
@@ -124,17 +117,19 @@ class Movie_update():
         #print(data_frame)
         return data_frame
 
-#data_frame.shape[0] - ilośc wierszy
 
-#-----------------------------------------------------------
-data_frame = File.open("movies.csv")
-#print(data_frame)
+data_frame = File.open("movies_updated.csv")
+print(data_frame)
+szukana = "Joker"
+#data_frame=data_frame.sort_values(by=['year','runtime'])
+data_frame=data_frame.sort_values(by=['runtime'])
+print(data_frame.get('runtime'))
+File.save(data_frame)
 
-i=0
-movie_list_update = Movie_update()
 
-'''while i < data_frame.shape[0]:
-    print("Pobieranie danych")
+
+"""while i < data_frame.shape[0]:
+
     movie_list_update.data_row(data_frame,i)
     movie_list_update.title(data_frame,i)
     #print(movie_list_update.movie_title)
@@ -152,10 +147,10 @@ movie_list_update = Movie_update()
     movie_list_update.add_imdb_votes()
     movie_list_update.add_box_office()
     movie_list_update.update_data_frame(data_frame,i)
-    i+=1
 
-File.save(data_frame)
+
+    i+=1"""
+
+
 print(data_frame)
-#print("END")
-'''
-movie_list_update.add_title("Nana")
+print("END")
