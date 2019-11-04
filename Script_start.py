@@ -1,5 +1,5 @@
 import Api_download
-
+import pandas as pd
 import argparse
 
 
@@ -24,13 +24,34 @@ if args.data != 0:
     Api_download.Pobranie()
 
 if args.sort_by1 is not None:
-    print(args.sort_by1)
+    #print(args.sort_by1)
     data_frame = Api_download.File.open("movies_updated2.csv")
-    data_frame = data_frame.sort_values(by=[args.sort_by1])
+
     if args.sort_by1 == 'year':
-        print(data_frame[["title","year"]])
+        data_frame = data_frame.sort_values(by=[args.sort_by1])
+        print(data_frame[["title","year"]].to_string()) #.to_string() - pozwala printowac
     elif args.sort_by1 == 'title':
-        print(data_frame[["title"]])
+        data_frame = data_frame.sort_values(by=[args.sort_by1])
+        print(data_frame[["title"]].to_string())
+    elif args.sort_by1 == 'runtime':
+        for i in range(0,data_frame.shape[0]):
+            x=data_frame.values[i][3]
+            #print(type(x))
+            if type(x)==str:
+                x=x.split(" ")
+                print(x[0])
+                data_frame["runtime"][i]=int(x[0])
+
+                print(data_frame.values[i][3])
+            if type(x)==float:
+                data_frame["runtime"][i]=x
+        data_frame = data_frame.sort_values(by=[args.sort_by1])
+
+        print(data_frame[["title","runtime"]].to_string())
+        #print(type(data_frame["runtime"][0]))
+        #print(data_frame.dtypes)
+
+        #print(data_frame[["title","runtime"]].to_string())
 
 if args.add is not None:
     #print(Api_download.data_frame)
