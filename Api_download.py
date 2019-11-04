@@ -12,8 +12,8 @@ class File():
         #print(data_frame)
         return data_frame
 
-    '''def save2():
-        data_frame.to_csv("movies_updated.csv", index=False)'''
+    def save2(self):
+        self.to_csv("movies_updated2.csv", index=False)
 
     def save(self):
         self.to_csv("movies_updated.csv", index=False)
@@ -28,7 +28,7 @@ class Movie_update():
 
     def add_title(self,title):
 
-        data_frame.loc[data_frame.index.max()+1]=[data_frame.index.max()+1,title,"","","","","","","","","","","",""]
+        self.loc[self.index.max()+1]=[self.index.max()+1,title,"","","","","","","","","","","",""]
         #self.frame_data_row[1] = title
         #print(data_frame)
 
@@ -70,33 +70,28 @@ class Movie_update():
 #data_frame.shape[0] - ilośc wierszy
 
 #-----------------------------------------------------------
-data_frame = File.open("movies.csv")
-#print(data_frame)
+def Pobranie():
+    data_frame = File.open("movies.csv")
+    #print(data_frame)
 
-i=0
-movie_list_update = Movie_update()
-print("Pobieranie danych")
-while i < data_frame.shape[0]:
-    movie_list_update.data_row(data_frame,i)
-    movie_list_update.title(data_frame,i)
-    #print(movie_list_update.movie_title)
-    movie_list_update.dict_create()
+    i=0
+    movie_list_update = Movie_update()
+    print("Pobieranie danych")
 
-    movie_list_update.add_movie()
-    movie_list_update.update_data_frame(data_frame,i)
-    i+=1
+    ##############
 
-File.save(data_frame)
-print(data_frame)
-print("Koniec pobierania danych")
+    while i < data_frame.shape[0]:
+        movie_list_update.data_row(data_frame,i)
+        movie_list_update.title(data_frame,i)
+        #print(movie_list_update.movie_title)
+        movie_list_update.dict_create()
 
-'''
-movie_list_update.add_title("The Day After Tomorrow")
-movie_list_update.data_row(data_frame,data_frame.index.max())
-movie_list_update.title(data_frame,data_frame.index.max())
-movie_list_update.dict_create()
-movie_list_update.add_movie()
-movie_list_update.update_data_frame(data_frame,data_frame.index.max())
-print(data_frame)
-File.save(data_frame)
-'''
+        movie_list_update.add_movie()
+        movie_list_update.update_data_frame(data_frame,i)
+        i+=1
+
+    File.save(data_frame)
+    File.save2(data_frame)
+    print(data_frame)
+    print("Koniec pobierania danych")
+
