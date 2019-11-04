@@ -30,7 +30,7 @@ class Movie_update():
 
         data_frame.loc[data_frame.index.max()+1]=[data_frame.index.max()+1,title,"","","","","","","","","","","",""]
         #self.frame_data_row[1] = title
-        print(data_frame)
+        #print(data_frame)
 
 
     def title(self,data_frame, i):
@@ -46,6 +46,7 @@ class Movie_update():
         self.movie_dict = json.loads(page)
         #print(self.movie_dict)
         return self.movie_dict
+
     def add_movie(self):
         self.frame_data_row[2] = self.movie_dict.get("Year")
         self.frame_data_row[3] = self.movie_dict.get("Runtime")
@@ -60,78 +61,7 @@ class Movie_update():
         self.frame_data_row[12] = self.movie_dict.get("imdbVotes")
         self.frame_data_row[13] = self.movie_dict.get("BoxOffice")
         return  self.frame_data_row
-    """def add_year(self):
-        #print(self.movie_dict.get("Year"))
-        self.frame_data_row[2]=self.movie_dict.get("Year")
-        #print(self.frame_data_row)
-        return self.frame_data_row
 
-    def add_runtime(self):
-        #print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[3]=self.movie_dict.get("Runtime")
-        #print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_genre(self):
-        #print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[4]=self.movie_dict.get("Genre")
-        #print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_director(self):
-        #print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[5]=self.movie_dict.get("Director")
-        #print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_cast(self):
-        #print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[6]=self.movie_dict.get("Actors")
-        #print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_writer(self):
-        # print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[7] = self.movie_dict.get("Writer")
-        # print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_language(self):
-        # print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[8] = self.movie_dict.get("Language")
-        # print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_country(self):
-        # print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[9] = self.movie_dict.get("Country")
-        # print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_awards(self):
-        # print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[10] = self.movie_dict.get("Awards")
-        # print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_imdb_rating(self):
-        # print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[11] = self.movie_dict.get("imdbRating")
-        # print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_imdb_votes(self):
-        # print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[12] = self.movie_dict.get("imdbVotes")
-        # print(self.frame_data_row)
-        return self.frame_data_row
-
-    def add_box_office(self):
-        # print(self.movie_dict.get("Runtime"))
-        self.frame_data_row[13] = self.movie_dict.get("BoxOffice")
-        # print(self.frame_data_row)
-        return self.frame_data_row
-    """
     def update_data_frame(self,data_frame, i):
         data_frame[i:i+1]=self.frame_data_row
         #print(data_frame)
@@ -145,31 +75,28 @@ data_frame = File.open("movies.csv")
 
 i=0
 movie_list_update = Movie_update()
-
+print("Pobieranie danych")
 while i < data_frame.shape[0]:
-    print("Pobieranie danych")
     movie_list_update.data_row(data_frame,i)
     movie_list_update.title(data_frame,i)
     #print(movie_list_update.movie_title)
     movie_list_update.dict_create()
-    '''movie_list_update.add_year()
-    movie_list_update.add_runtime()
-    movie_list_update.add_genre()
-    movie_list_update.add_director()
-    movie_list_update.add_cast()
-    movie_list_update.add_writer()
-    movie_list_update.add_language()
-    movie_list_update.add_country()
-    movie_list_update.add_awards()
-    movie_list_update.add_imdb_rating()
-    movie_list_update.add_imdb_votes()
-    movie_list_update.add_box_office()'''
+
     movie_list_update.add_movie()
     movie_list_update.update_data_frame(data_frame,i)
     i+=1
 
 File.save(data_frame)
 print(data_frame)
-#print("END")
+print("Koniec pobierania danych")
 
-movie_list_update.add_title("Nana")
+'''
+movie_list_update.add_title("The Day After Tomorrow")
+movie_list_update.data_row(data_frame,data_frame.index.max())
+movie_list_update.title(data_frame,data_frame.index.max())
+movie_list_update.dict_create()
+movie_list_update.add_movie()
+movie_list_update.update_data_frame(data_frame,data_frame.index.max())
+print(data_frame)
+File.save(data_frame)
+'''
