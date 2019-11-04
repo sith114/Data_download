@@ -46,8 +46,21 @@ class Movie_update():
         self.movie_dict = json.loads(page)
         #print(self.movie_dict)
         return self.movie_dict
-
-    def add_year(self):
+    def add_movie(self):
+        self.frame_data_row[2] = self.movie_dict.get("Year")
+        self.frame_data_row[3] = self.movie_dict.get("Runtime")
+        self.frame_data_row[4] = self.movie_dict.get("Genre")
+        self.frame_data_row[5] = self.movie_dict.get("Director")
+        self.frame_data_row[6] = self.movie_dict.get("Actors")
+        self.frame_data_row[7] = self.movie_dict.get("Writer")
+        self.frame_data_row[8] = self.movie_dict.get("Language")
+        self.frame_data_row[9] = self.movie_dict.get("Country")
+        self.frame_data_row[10] = self.movie_dict.get("Awards")
+        self.frame_data_row[11] = self.movie_dict.get("imdbRating")
+        self.frame_data_row[12] = self.movie_dict.get("imdbVotes")
+        self.frame_data_row[13] = self.movie_dict.get("BoxOffice")
+        return  self.frame_data_row
+    """def add_year(self):
         #print(self.movie_dict.get("Year"))
         self.frame_data_row[2]=self.movie_dict.get("Year")
         #print(self.frame_data_row)
@@ -118,7 +131,7 @@ class Movie_update():
         self.frame_data_row[13] = self.movie_dict.get("BoxOffice")
         # print(self.frame_data_row)
         return self.frame_data_row
-
+    """
     def update_data_frame(self,data_frame, i):
         data_frame[i:i+1]=self.frame_data_row
         #print(data_frame)
@@ -133,13 +146,13 @@ data_frame = File.open("movies.csv")
 i=0
 movie_list_update = Movie_update()
 
-'''while i < data_frame.shape[0]:
+while i < data_frame.shape[0]:
     print("Pobieranie danych")
     movie_list_update.data_row(data_frame,i)
     movie_list_update.title(data_frame,i)
     #print(movie_list_update.movie_title)
     movie_list_update.dict_create()
-    movie_list_update.add_year()
+    '''movie_list_update.add_year()
     movie_list_update.add_runtime()
     movie_list_update.add_genre()
     movie_list_update.add_director()
@@ -150,12 +163,13 @@ movie_list_update = Movie_update()
     movie_list_update.add_awards()
     movie_list_update.add_imdb_rating()
     movie_list_update.add_imdb_votes()
-    movie_list_update.add_box_office()
+    movie_list_update.add_box_office()'''
+    movie_list_update.add_movie()
     movie_list_update.update_data_frame(data_frame,i)
     i+=1
 
 File.save(data_frame)
 print(data_frame)
 #print("END")
-'''
+
 movie_list_update.add_title("Nana")
