@@ -17,3 +17,6 @@ optional arguments:
                         won
   -a ADD, --add ADD     Add movie, give movie title
   -hi, --highscore      Show highscore in some categories
+
+  To first use we only need	movies.csv!
+  movies_updated.csv and movies_updated2.csv are created by script.
