@@ -92,12 +92,12 @@ if args.sort_by1 is not None:
         #data_frame = data_frame.sort_values(by=['box_office']).reset_index(drop = True)
         print(box_office().to_string())
         #print(data_frame[["title", "box_office"]].to_string())
-#Sorts by1
+
+#Sorts by2
 if args.sort_by2 is not None:
     if args.sort_by2 is True:
-        print("asd")
         data_frame = Api_download.File.open("movies_updated2.csv")
-        data_frame = data_frame.sort_values(by=["year","title"])
+        data_frame = data_frame.sort_values(by=["year","title"]).reset_index(drop = True)
         print(data_frame[["year","title"]].to_string())
 
 
