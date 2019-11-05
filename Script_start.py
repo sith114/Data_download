@@ -22,10 +22,22 @@ def runtime():
     #return data_frame[["title", "runtime"]].to_string()
     return data_frame[["title", "runtime"]]
 
+def box_office():
+    data_frame = Api_download.File.open("movies_updated2.csv")
+    for i in range(0, data_frame.shape[0]):
+        x = data_frame.values[i][13]
+        x=Box_clear(x)
+        data_frame.loc[i , 'box_office'] = x
+    data_frame = data_frame.sort_values(by=['box_office'], na_position='first').reset_index(drop = True)
+    #data_frame = data_frame.reset_index(drop = True)
+    #return data_frame[["title", "runtime"]].to_string()
+    return data_frame[["title", "box_office"]]
+
+
 def Box_clear(a):
     if type(a) is not float:
         a=a.replace('$', '')
-        a=float(a.replace(',', ''))
+        a=int(a.replace(',', ''))
     else:
         a=0
     return a
@@ -73,6 +85,12 @@ if args.sort_by1 is not None:
         data_frame = data_frame.sort_values(by=['imdb_rating']).reset_index(drop = True)
 
         print(data_frame[["title", "imdb_rating"]].to_string())
+
+    elif args.sort_by1 == 'box_office':
+        print("box office")
+        #data_frame = data_frame.sort_values(by=['box_office']).reset_index(drop = True)
+        print(box_office().to_string())
+        #print(data_frame[["title", "box_office"]].to_string())
 
 #Compare====================================================================
 elif args.comp is not None:
