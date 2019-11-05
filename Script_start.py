@@ -50,10 +50,9 @@ parser = argparse.ArgumentParser(description='Write text info a file.')
 parser.add_argument('--data',type=int,help="Download movies data, give num > 0 to download",default='0')
 parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
 parser.add_argument('--sort_by2',type=bool,help="To sort put True as an argument Sort by two: Sort movie form a to z in each year (Will add more optrions)",default=False)
-parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3..."
-                                  "type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
+parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3... type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
 parser.add_argument('--add',type=str,help="Add movie, give movie title",default=None)
-parser.add_argument('--highscore',type=str,help="Show highscore in some categories",default=None)
+parser.add_argument('--highscore',help="Show highscore in some categories",default=None,action='store_true')
 args = parser.parse_args()
 
 
@@ -67,18 +66,18 @@ if args.sort_by1 is not None:
     data_frame = Api_download.File.open("movies_updated2.csv")
 
     if args.sort_by1 == 'year':
-        data_frame = data_frame.sort_values(by=[args.sort_by1])
+        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
         print(data_frame[["title","year"]].to_string()) #.to_string() - pozwala printowac
 
     elif args.sort_by1 == 'title':
-        data_frame = data_frame.sort_values(by=[args.sort_by1])
+        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
         print(data_frame[["title"]].to_string())
 
     elif args.sort_by1 == 'runtime':
         print(runtime().to_string())
 
     elif args.sort_by1 == 'genre':
-        data_frame = data_frame.sort_values(by=[args.sort_by1])
+        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
         print(data_frame[["title","genre"]].to_string())
 
     elif args.sort_by1 == 'IMDb Rating':
@@ -102,7 +101,7 @@ if args.sort_by2 is not None:
 
 
 #Compare====================================================================
-elif args.comp is not None:
+if args.comp is not None:
     data_frame = Api_download.File.open("movies_updated2.csv")
     #print(args.comp)
 
@@ -177,7 +176,7 @@ elif args.comp is not None:
 
 
 #Dodanie do pliku================================================================
-elif args.add is not None:
+if args.add is not None:
     #print(Api_download.data_frame)
     #print(Api_download.File.open("movies_updated2.csv"))
     data_frame = Api_download.File.open("movies_updated2.csv")
@@ -191,17 +190,20 @@ elif args.add is not None:
     print(data_frame)
     Api_download.File.save2(data_frame)
 
-elif args.highscore is not None:
+if args.highscore is not None:
     print("highscore is:")
     #runtime===================================
     runtime_var=runtime()
     runtime_var=runtime()["runtime"][runtime_var.shape[0]-1]
     runtime_var_movie=runtime()["title"][runtime().shape[0]-1]
     print("Runtime={}".format(runtime_var),"Title of movie is {}".format(runtime_var_movie))
+
     #IMBd rating==================================
     data_frame = Api_download.File.open("movies_updated2.csv")
     data_frame = data_frame.sort_values(by=['imdb_rating']).reset_index(drop=True)
     print("IMBd rating={}".format(data_frame["imdb_rating"][runtime().shape[0]-1]),"Title of movie is {}".format(data_frame["title"][runtime().shape[0]-1]))
+    # box_office==================================
+    print("Box Office={}".format(box_office()["box_office"][box_office().shape[0]-1]),"Title of movie is {}".format(box_office()["title"][box_office().shape[0]-1]))
 
 
 
