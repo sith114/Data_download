@@ -47,13 +47,13 @@ parser = argparse.ArgumentParser(description='Movie base, before first use downl
 
 # Define arguments
 
-parser.add_argument('--data',help="Download movies data",default=None,action='store_true')
-parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
-parser.add_argument('--sort_by2',action='store_true',help="To sort put True as an argument Sort by two: Sort movie form a to z in each year (Will add more optrions)",default=False)
-parser.add_argument('--filtr',action='store_true',help="Filtr movies that earnd more than 100,000,000$ )",default=False)
-parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3... type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
-parser.add_argument('--add',type=str,help="Add movie, give movie title",default=None)
-parser.add_argument('--highscore',help="Show highscore in some categories",default=None,action='store_true')
+parser.add_argument('-d','--data',help="Download movies data",default=None,action='store_true')
+parser.add_argument('-s1','--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
+parser.add_argument('-s2','--sort_by2',action='store_true',help="To sort put True as an argument Sort by two: Sort movie form a to z in each year (Will add more optrions)",default=False)
+parser.add_argument('-f','--filtr',action='store_true',help="Filtr movies that earnd more than 100,000,000$ )",default=None)
+parser.add_argument('-c','--comp',help="Type of compare, movie1, movie2, movie3... type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
+parser.add_argument('-a','--add',type=str,help="Add movie, give movie title",default=None)
+parser.add_argument('-hi','--highscore',help="Show highscore in some categories",default=None,action='store_true')
 args = parser.parse_args()
 
 
