@@ -17,8 +17,10 @@ def runtime():
         if type(x) == float:
             # data_frame["runtime"][i]=x #- nie gwarantuje poprawnosci
             data_frame.loc[i, 'runtime'] = x
-    data_frame = data_frame.sort_values(by=[args.sort_by1], na_position='first')
-    return data_frame[["title", "runtime"]].to_string()
+    data_frame = data_frame.sort_values(by=['runtime'], na_position='first').reset_index(drop = True)
+    #data_frame = data_frame.reset_index(drop = True)
+    #return data_frame[["title", "runtime"]].to_string()
+    return data_frame[["title", "runtime"]]
 
 def Box_clear(a):
     if type(a) is not float:
@@ -36,8 +38,9 @@ parser = argparse.ArgumentParser(description='Write text info a file.')
 parser.add_argument('--data',type=int,help="Download movies data, give num > 0 to download",default='0')
 parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
 parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3..."
-                                  "type of comape is: runtime, Box office, IMDb Rating, awards won", default='',nargs='+')
+                                  "type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
 parser.add_argument('--add',type=str,help="Add movie, give movie title",default=None)
+parser.add_argument('--highscore',type=str,help="Show highscore in some categories",default=None)
 args = parser.parse_args()
 
 
@@ -59,12 +62,17 @@ if args.sort_by1 is not None:
         print(data_frame[["title"]].to_string())
 
     elif args.sort_by1 == 'runtime':
-        print(runtime())
-
+        print(runtime().to_string())
 
     elif args.sort_by1 == 'genre':
         data_frame = data_frame.sort_values(by=[args.sort_by1])
         print(data_frame[["title","genre"]].to_string())
+
+    elif args.sort_by1 == 'IMDb Rating':
+        print("IMDb Rating")
+        data_frame = data_frame.sort_values(by=['imdb_rating']).reset_index(drop = True)
+
+        print(data_frame[["title", "imdb_rating"]].to_string())
 
 #Compare====================================================================
 elif args.comp is not None:
@@ -155,6 +163,18 @@ elif args.add is not None:
     movie_list_update.update_data_frame(movie_list_update,data_frame, data_frame.index.max())
     print(data_frame)
     Api_download.File.save2(data_frame)
+
+elif args.highscore is not None:
+    print("highscore is:")
+    #runtime===================================
+    runtime_var=runtime()
+    runtime_var=runtime()["runtime"][runtime_var.shape[0]-1]
+    runtime_var_movie=runtime()["title"][runtime().shape[0]-1]
+    print("Runtime={}".format(runtime_var),"Title of movie is {}".format(runtime_var_movie))
+    #IMBd rating==================================
+    data_frame = Api_download.File.open("movies_updated2.csv")
+    data_frame = data_frame.sort_values(by=['imdb_rating']).reset_index(drop=True)
+    print("IMBd rating={}".format(data_frame["imdb_rating"][runtime().shape[0]-1]),"Title of movie is {}".format(data_frame["title"][runtime().shape[0]-1]))
 
 
 
