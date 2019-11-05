@@ -35,7 +35,8 @@ parser = argparse.ArgumentParser(description='Write text info a file.')
 
 parser.add_argument('--data',type=int,help="Download movies data, give num > 0 to download",default='0')
 parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
-parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3...", default='',nargs='+')
+parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3..."
+                                  "type of comape is: runtime, Box office = box, IMDb Rating", default='',nargs='+')
 parser.add_argument('--add',type=str,help="Add movie, give movie title",default=None)
 args = parser.parse_args()
 
@@ -65,12 +66,12 @@ if args.sort_by1 is not None:
         data_frame = data_frame.sort_values(by=[args.sort_by1])
         print(data_frame[["title","genre"]].to_string())
 
-#Porowania
+#Compare====================================================================
 elif args.comp is not None:
     data_frame = Api_download.File.open("movies_updated2.csv")
     #print(args.comp)
 
-    #Runtime
+    #Runtime================================================================
     if args.comp[0]=="runtime":
         #print(data_frame["title"].str.find(args.comp[1],0).to_string())
         for i in range(0, data_frame.shape[0]):
@@ -88,9 +89,9 @@ elif args.comp is not None:
             print(args.comp[1],run1,'is longer than',args.comp[2],run2)
         elif run2>run1:
             print(args.comp[2], run2, 'is longer than', args.comp[1], run1)
-
+    #Box_Office=========================================================
     if args.comp[0]=="box":
-        print("Box")
+        #print("Box")
         for i in range(0, data_frame.shape[0]):
             x = data_frame.values[i][1]
             #print(x)
@@ -106,7 +107,22 @@ elif args.comp is not None:
             print(args.comp[1],box1,'has bigger box office than',args.comp[2],box2)
         elif box2>box1:
             print(args.comp[2], box2, 'has bigger box office than', args.comp[1], box1)
+    if args.comp[0]=="IMDb Rating":
+        #print("IMDb Rating")
+        for i in range(0, data_frame.shape[0]):
+            x = data_frame.values[i][1]
+            #print(x)
+            if x == args.comp[1]:
+                imdb1=data_frame.values[i][11]
 
+            elif x==args.comp[2]:
+                imdb2=data_frame.values[i][11]
+        #print(imdb1,imdb2)
+        #print(type(imdb2))
+        if imdb1 > imdb2:
+            print(args.comp[1],imdb1,'has bigger IMDb Rating than',args.comp[2],imdb2)
+        elif imdb2>imdb1:
+            print(args.comp[2], imdb2, 'has bigger IMDb Rating than', args.comp[1], imdb1)
 
 #Dodanie do pliku
 elif args.add is not None:
