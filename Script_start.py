@@ -49,6 +49,7 @@ parser = argparse.ArgumentParser(description='Write text info a file.')
 
 parser.add_argument('--data',type=int,help="Download movies data, give num > 0 to download",default='0')
 parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
+parser.add_argument('--sort_by2',type=bool,help="To sort put True as an argument Sort by two: Sort movie form a to z in each year (Will add more optrions)",default=False)
 parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3..."
                                   "type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
 parser.add_argument('--add',type=str,help="Add movie, give movie title",default=None)
@@ -60,7 +61,7 @@ args = parser.parse_args()
 if args.data != 0:
     Api_download.Pobranie()
 
-#Sortowania
+#Sorts by1
 if args.sort_by1 is not None:
     #print(args.sort_by1)
     data_frame = Api_download.File.open("movies_updated2.csv")
@@ -91,6 +92,14 @@ if args.sort_by1 is not None:
         #data_frame = data_frame.sort_values(by=['box_office']).reset_index(drop = True)
         print(box_office().to_string())
         #print(data_frame[["title", "box_office"]].to_string())
+#Sorts by1
+if args.sort_by2 is not None:
+    if args.sort_by2 is True:
+        print("asd")
+        data_frame = Api_download.File.open("movies_updated2.csv")
+        data_frame = data_frame.sort_values(by=["year","title"])
+        print(data_frame[["year","title"]].to_string())
+
 
 #Compare====================================================================
 elif args.comp is not None:
