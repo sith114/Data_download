@@ -67,9 +67,9 @@ class Movie_update():
         #print(data_frame)
         return data_frame
 
-#data_frame.shape[0] - ilośc wierszy
 
-#-----------------------------------------------------------
+
+
 def Pobranie():
     data_frame = File.open("movies.csv")
     #print(data_frame)
@@ -79,7 +79,8 @@ def Pobranie():
     print("Pobieranie danych")
 
     ##############
-
+    # data_frame.shape[0] - ilośc wierszy
+    ##############
     while i < data_frame.shape[0]:
         movie_list_update.data_row(data_frame,i)
         movie_list_update.title(data_frame,i)
