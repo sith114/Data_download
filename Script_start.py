@@ -49,7 +49,7 @@ parser = argparse.ArgumentParser(description='Write text info a file.')
 
 parser.add_argument('--data',type=int,help="Download movies data, give num > 0 to download",default='0')
 parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
-parser.add_argument('--sort_by2',type=bool,help="To sort put True as an argument Sort by two: Sort movie form a to z in each year (Will add more optrions)",default=False)
+parser.add_argument('--sort_by2',action='store_true',help="To sort put True as an argument Sort by two: Sort movie form a to z in each year (Will add more optrions)",default=False)
 parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3... type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
 parser.add_argument('--add',type=str,help="Add movie, give movie title",default=None)
 parser.add_argument('--highscore',help="Show highscore in some categories",default=None,action='store_true')
