@@ -20,6 +20,13 @@ def runtime():
     data_frame = data_frame.sort_values(by=[args.sort_by1], na_position='first')
     return data_frame[["title", "runtime"]].to_string()
 
+def Box_clear(a):
+    if type(a) is not float:
+        a=a.replace('$', '')
+        a=float(a.replace(',', ''))
+    else:
+        a=0
+    return a
 
 
 parser = argparse.ArgumentParser(description='Write text info a file.')
@@ -53,6 +60,7 @@ if args.sort_by1 is not None:
     elif args.sort_by1 == 'runtime':
         print(runtime())
 
+
     elif args.sort_by1 == 'genre':
         data_frame = data_frame.sort_values(by=[args.sort_by1])
         print(data_frame[["title","genre"]].to_string())
@@ -61,6 +69,8 @@ if args.sort_by1 is not None:
 elif args.comp is not None:
     data_frame = Api_download.File.open("movies_updated2.csv")
     #print(args.comp)
+
+    #Runtime
     if args.comp[0]=="runtime":
         #print(data_frame["title"].str.find(args.comp[1],0).to_string())
         for i in range(0, data_frame.shape[0]):
@@ -79,11 +89,26 @@ elif args.comp is not None:
         elif run2>run1:
             print(args.comp[2], run2, 'is longer than', args.comp[1], run1)
 
+    if args.comp[0]=="box":
+        print("Box")
+        for i in range(0, data_frame.shape[0]):
+            x = data_frame.values[i][1]
+            #print(x)
+            if x == args.comp[1]:
+                box1=data_frame.values[i][13]
+
+            elif x==args.comp[2]:
+                box2=data_frame.values[i][13]
+        box1 = Box_clear(box1)
+        box2 = Box_clear(box2)
+
+        if box1 > box2:
+            print(args.comp[1],box1,'has bigger box office than',args.comp[2],box2)
+        elif box2>box1:
+            print(args.comp[2], box2, 'has bigger box office than', args.comp[1], box1)
 
 
-
-
-#Dodanie pliku
+#Dodanie do pliku
 elif args.add is not None:
     #print(Api_download.data_frame)
     #print(Api_download.File.open("movies_updated2.csv"))

@@ -95,4 +95,3 @@ def Pobranie():
     File.save2(data_frame)
     print(data_frame)
     print("Koniec pobierania danych")
-
