@@ -43,11 +43,11 @@ def Box_clear(a):
     return a
 
 
-parser = argparse.ArgumentParser(description='Write text info a file.')
+parser = argparse.ArgumentParser(description='Movie base,before first use downlat data by --data')
 
 # Define arguments
 
-parser.add_argument('--data',type=int,help="Download movies data, give num > 0 to download",default='0')
+parser.add_argument('--data',help="Download movies data",default=None,action='store_true')
 parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
 parser.add_argument('--sort_by2',action='store_true',help="To sort put True as an argument Sort by two: Sort movie form a to z in each year (Will add more optrions)",default=False)
 parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3... type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
@@ -57,7 +57,7 @@ args = parser.parse_args()
 
 
 #Pobieranie danych utworzenie pliku movies_updated.csv
-if args.data != 0:
+if args.data is not None:
     Api_download.Pobranie()
 
 #Sorts by1
