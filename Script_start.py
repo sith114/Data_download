@@ -43,13 +43,14 @@ def Box_clear(a):
     return a
 
 
-parser = argparse.ArgumentParser(description='Movie base,before first use downlat data by --data')
+parser = argparse.ArgumentParser(description='Movie base, before first use downlat data by --data!')
 
 # Define arguments
 
 parser.add_argument('--data',help="Download movies data",default=None,action='store_true')
 parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
 parser.add_argument('--sort_by2',action='store_true',help="To sort put True as an argument Sort by two: Sort movie form a to z in each year (Will add more optrions)",default=False)
+parser.add_argument('--filtr',action='store_true',help="Filtr movies that earnd more than 100,000,000$ )",default=False)
 parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3... type of comape is: runtime, Box office, IMDb Rating, awards won", default=None,nargs='+')
 parser.add_argument('--add',type=str,help="Add movie, give movie title",default=None)
 parser.add_argument('--highscore',help="Show highscore in some categories",default=None,action='store_true')
@@ -98,6 +99,20 @@ if args.sort_by2 is not None:
         data_frame = Api_download.File.open("movies_updated2.csv")
         data_frame = data_frame.sort_values(by=["year","title"]).reset_index(drop = True)
         print(data_frame[["year","title"]].to_string())
+#filtr
+if args.filtr is not None:
+    print('Filtrujemy')
+    #print(box_office())
+    data_frame_box=box_office()
+
+    for i in range(0, box_office().shape[0]):
+        x = box_office().values[i][1]
+        if x>100000000:
+            data_frame_box.loc[i , 'box_office'] = x
+            #print("dodaje")
+        else:
+            data_frame_box=data_frame_box.drop(i)
+    print(data_frame_box.reset_index(drop = True))
 
 
 #Compare====================================================================
