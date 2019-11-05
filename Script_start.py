@@ -36,7 +36,7 @@ parser = argparse.ArgumentParser(description='Write text info a file.')
 parser.add_argument('--data',type=int,help="Download movies data, give num > 0 to download",default='0')
 parser.add_argument('--sort_by1',type=str,help="Sort by one: title,year,runtime,genre,director,cast,writer,language,country,awards,imdb_rating,imdb_votes,box_office",default=None)
 parser.add_argument('--comp',help="Type of compare, movie1, movie2, movie3..."
-                                  "type of comape is: runtime, Box office = box, IMDb Rating", default='',nargs='+')
+                                  "type of comape is: runtime, Box office, IMDb Rating, awards won", default='',nargs='+')
 parser.add_argument('--add',type=str,help="Add movie, give movie title",default=None)
 args = parser.parse_args()
 
@@ -90,7 +90,7 @@ elif args.comp is not None:
         elif run2>run1:
             print(args.comp[2], run2, 'is longer than', args.comp[1], run1)
     #Box_Office=========================================================
-    if args.comp[0]=="box":
+    if args.comp[0]=="Box office":
         #print("Box")
         for i in range(0, data_frame.shape[0]):
             x = data_frame.values[i][1]
@@ -107,6 +107,7 @@ elif args.comp is not None:
             print(args.comp[1],box1,'has bigger box office than',args.comp[2],box2)
         elif box2>box1:
             print(args.comp[2], box2, 'has bigger box office than', args.comp[1], box1)
+    # IMDb Rating=========================================================
     if args.comp[0]=="IMDb Rating":
         #print("IMDb Rating")
         for i in range(0, data_frame.shape[0]):
@@ -123,8 +124,24 @@ elif args.comp is not None:
             print(args.comp[1],imdb1,'has bigger IMDb Rating than',args.comp[2],imdb2)
         elif imdb2>imdb1:
             print(args.comp[2], imdb2, 'has bigger IMDb Rating than', args.comp[1], imdb1)
+    # awards won=========================================================
+    if args.comp[0]=="awards won":
+        #print("awards won")
+        for i in range(0, data_frame.shape[0]):
+            x = data_frame.values[i][1]
+            #print(x)
+            if x == args.comp[1]:
+                awards1=data_frame.values[i][10]
 
-#Dodanie do pliku
+            elif x==args.comp[2]:
+                awards2=data_frame.values[i][10]
+        print(args.comp[1],awards1)
+        print(args.comp[2],awards2)
+
+
+
+
+#Dodanie do pliku================================================================
 elif args.add is not None:
     #print(Api_download.data_frame)
     #print(Api_download.File.open("movies_updated2.csv"))
