@@ -144,6 +144,43 @@ def Filtering():
         else:
             data_frame_box=data_frame_box.drop(i)
     print(data_frame_box.reset_index(drop = True))
+def Sorting():
+    data_frame = Api_download.File.open("movies_updated2.csv")
+
+    if args.sort_by1 == 'year':
+        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
+        print(data_frame[["title","year"]].to_string()) #.to_string() - pozwala printowac
+
+    elif args.sort_by1 == 'title':
+        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
+        print(data_frame[["title"]].to_string())
+
+    elif args.sort_by1 == 'runtime':
+        print(runtime().to_string())
+
+    elif args.sort_by1 == 'genre':
+        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
+        print(data_frame[["title","genre"]].to_string())
+
+    elif args.sort_by1 == 'imdb_rating':
+        print("IMDb Rating")
+        data_frame = data_frame.sort_values(by=['imdb_rating']).reset_index(drop = True)
+
+        print(data_frame[["title", "imdb_rating"]].to_string())
+
+    elif args.sort_by1 == 'box_office':
+        print("box office")
+        #data_frame = data_frame.sort_values(by=['box_office']).reset_index(drop = True)
+        print(box_office().to_string())
+        #print(data_frame[["title", "box_office"]].to_string())
+def Sorting_by2():
+    if args.sort_by2 is True:
+        data_frame = Api_download.File.open("movies_updated2.csv")
+        data_frame = data_frame.sort_values(by=["year","title"]).reset_index(drop = True)
+        print(data_frame[["year","title"]].to_string())
+
+
+
 
 
 parser = argparse.ArgumentParser(description='Movie base, before first use downlat data by --data!')
@@ -167,41 +204,11 @@ if args.data is not None:
 #Sorts by1
 if args.sort_by1 is not None:
     #print(args.sort_by1)
-    data_frame = Api_download.File.open("movies_updated2.csv")
-
-    if args.sort_by1 == 'year':
-        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
-        print(data_frame[["title","year"]].to_string()) #.to_string() - pozwala printowac
-
-    elif args.sort_by1 == 'title':
-        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
-        print(data_frame[["title"]].to_string())
-
-    elif args.sort_by1 == 'runtime':
-        print(runtime().to_string())
-
-    elif args.sort_by1 == 'genre':
-        data_frame = data_frame.sort_values(by=[args.sort_by1]).reset_index(drop = True)
-        print(data_frame[["title","genre"]].to_string())
-
-    elif args.sort_by1 == 'IMDb Rating':
-        print("IMDb Rating")
-        data_frame = data_frame.sort_values(by=['imdb_rating']).reset_index(drop = True)
-
-        print(data_frame[["title", "imdb_rating"]].to_string())
-
-    elif args.sort_by1 == 'box_office':
-        print("box office")
-        #data_frame = data_frame.sort_values(by=['box_office']).reset_index(drop = True)
-        print(box_office().to_string())
-        #print(data_frame[["title", "box_office"]].to_string())
+    Sorting()
 
 #Sorts by2
 if args.sort_by2 is not None:
-    if args.sort_by2 is True:
-        data_frame = Api_download.File.open("movies_updated2.csv")
-        data_frame = data_frame.sort_values(by=["year","title"]).reset_index(drop = True)
-        print(data_frame[["year","title"]].to_string())
+    Sorting_by2()
 
 #filtr
 if args.filtr is not None:
