@@ -70,7 +70,7 @@ class Movie_update():
 
 
 
-def Pobranie():
+def Download_data():
     data_frame = File.open("movies.csv")
     #print(data_frame)
 

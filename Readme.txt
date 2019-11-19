@@ -4,9 +4,9 @@ optional arguments:
   -h, --help            show this help message and exit
   -d, --data            Download movies data
   -s1 SORT_BY1, --sort_by1 SORT_BY1
-                        Sort by one: title,year,runtime,genre,director,cast,wr
-                        iter,language,country,awards,imdb_rating,imdb_votes,bo
-                        x_office
+                        Sort by one: title,year,runtime,genre,
+                        imdb_rating,box_office
+
   -s2, --sort_by2       To sort put True as an argument Sort by two: Sort
                         movie form a to z in each year (Will add more
                         optrions)

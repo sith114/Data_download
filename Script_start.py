@@ -59,7 +59,7 @@ args = parser.parse_args()
 
 #Pobieranie danych utworzenie pliku movies_updated.csv
 if args.data is not None:
-    Api_download.Pobranie()
+    Api_download.Download_data()
 
 #Sorts by1
 if args.sort_by1 is not None:
